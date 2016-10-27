@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.android.miwok.R;
@@ -20,9 +21,10 @@ import java.util.List;
  */
 
 public class WordAdapter extends ArrayAdapter<Word> {
-
-    public WordAdapter(Activity context, List<Word> words) {
+    private int colorId;
+    public WordAdapter(Activity context, List<Word> words, int colorId) {
         super(context,0,words);
+        this.colorId=colorId;
     }
 
     @NonNull
@@ -32,6 +34,9 @@ public class WordAdapter extends ArrayAdapter<Word> {
         if (listItemView == null){
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item,parent,false);
         }
+
+        LinearLayout listItemLayout = (LinearLayout) listItemView.findViewById(R.id.list_item_text);
+        listItemLayout.setBackgroundResource(colorId);
 
         Word currentWord = getItem(position);
 
