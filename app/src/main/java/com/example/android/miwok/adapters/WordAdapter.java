@@ -2,6 +2,7 @@ package com.example.android.miwok.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class WordAdapter extends ArrayAdapter<Word> {
     private int colorId;
+    private MediaPlayer mediaPlayer;
     public WordAdapter(Activity context, List<Word> words, int colorId) {
         super(context,0,words);
         this.colorId=colorId;
@@ -51,6 +53,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         TextView defaultTextView = (TextView) listItemView.findViewById(R.id.word_english);
         defaultTextView.setText(currentWord.getDefaultTranslation());
+
 
 
         return listItemView;

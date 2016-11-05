@@ -9,7 +9,6 @@
     <ImageView
         android:layout_width="@dimen/list_item_height"
         android:layout_height="@dimen/list_item_height"
-        android:src="@mipmap/ic_launcher"
         android:id="@+id/word_photo" />
     <LinearLayout
         android:layout_width="match_parent"
