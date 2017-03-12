@@ -1,28 +1,17 @@
-/*
- * Copyright (C) 2016 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.example.android.miwok;
+
 
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.android.miwok.adapters.WordAdapter;
 import com.example.android.miwok.entities.Word;
@@ -30,7 +19,10 @@ import com.example.android.miwok.entities.Word;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ColorsActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class ColorsFragment extends Fragment {
 
     private AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
@@ -68,18 +60,23 @@ public class ColorsActivity extends AppCompatActivity {
         }
     };
 
+
+    public ColorsFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         releaseMediaPlayer();
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.word_list, container, false);
 
-        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
         final List<Word> words = new ArrayList<>();
 
@@ -92,9 +89,9 @@ public class ColorsActivity extends AppCompatActivity {
         words.add(new Word("dusty yellow", "ṭopiisә",R.drawable.color_dusty_yellow, R.raw.color_dusty_yellow));
         words.add(new Word("mustard yellow", "chiwiiṭә",R.drawable.color_mustard_yellow, R.raw.color_mustard_yellow));
 
-        WordAdapter itemsAdapter = new WordAdapter(this, words, R.color.category_colors);
+        WordAdapter itemsAdapter = new WordAdapter(getActivity(), words, R.color.category_colors);
 
-        ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = (ListView) rootView.findViewById(R.id.list);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -106,7 +103,7 @@ public class ColorsActivity extends AppCompatActivity {
 
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     Word word = words.get(i);
-                    mMediaPlayer = MediaPlayer.create(ColorsActivity.this, word.getAudioResourceId());
+                    mMediaPlayer = MediaPlayer.create(getActivity(), word.getAudioResourceId());
                     mMediaPlayer.setOnCompletionListener(completionListener);
                     mMediaPlayer.start();
                 }
@@ -115,6 +112,7 @@ public class ColorsActivity extends AppCompatActivity {
 
         listView.setAdapter(itemsAdapter);
 
+        return rootView;
     }
 
     /**
@@ -135,4 +133,5 @@ public class ColorsActivity extends AppCompatActivity {
             mAudioManager.abandonAudioFocus(audioFocusChangeListener);
         }
     }
+
 }
