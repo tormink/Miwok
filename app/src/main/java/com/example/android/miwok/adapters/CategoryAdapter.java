@@ -15,8 +15,15 @@ import com.example.android.miwok.PhrasesFragment;
 
 public class CategoryAdapter extends FragmentPagerAdapter {
 
+    private String tabTitles[] = new String[] {"Numbers", "Family", "Colors", "Phrases"};
+
     public CategoryAdapter(FragmentManager fm) {
         super(fm);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return tabTitles[position];
     }
 
     @Override

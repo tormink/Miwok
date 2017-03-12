@@ -16,6 +16,7 @@
 package com.example.android.miwok;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
@@ -35,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
         CategoryAdapter pagerAdapter = new CategoryAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(pagerAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+        getSupportActionBar().setElevation(0);
 
 
     }
